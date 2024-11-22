@@ -5,6 +5,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.probability import FreqDist
 from langdetect import detect, DetectorFactory
+from textblob import TextBlob
 import string
 
 # Set seed for consistent language detection
@@ -59,6 +60,35 @@ def analyze_keywords_by_language(description):
     except Exception as e:
         return f"Error during processing: {str(e)}"
     
+
+def analyze_sentiment_of_comments(comments):
+    """Analyzes sentiment of a list of comments."""
+    sentiments = []
+    for comment in comments:
+        # Create a TextBlob object for each comment
+        blob = TextBlob(comment)
+        
+        # Get polarity and subjectivity of the comment
+        polarity = blob.sentiment.polarity
+        subjectivity = blob.sentiment.subjectivity
+        
+        # Classify the sentiment based on polarity
+        if polarity > 0:
+            sentiment = 'Positive'
+        elif polarity < 0:
+            sentiment = 'Negative'
+        else:
+            sentiment = 'Neutral'
+        
+        sentiments.append({
+            'comment': comment,
+            'polarity': polarity,
+            'subjectivity': subjectivity,
+            'sentiment': sentiment
+        })
+    
+    return sentiments
+
 def analyze_sentiment(text):
     """Perform sentiment analysis on the given text."""
     sia = SentimentIntensityAnalyzer()
