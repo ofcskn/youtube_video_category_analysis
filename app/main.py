@@ -1,6 +1,6 @@
 from graph import plot_sentiment_density
 from youtube_data import fetch_video_description, get_channel_information, get_video_comments
-from config import VIDEO_ID
+from config import VIDEO_ID, YOUTUBE_CHANNEL_ID
 from nlp_analysis import analyze_sentiment, analyze_sentiment_of_comments, extract_keywords, analyze_keywords_by_language
 from models.channel import Channel
 import json
@@ -29,8 +29,17 @@ def main():
     # plot_sentiment_density(sentiment_of_comments)
     
     # # Get the channal information
-    # channel = get_channel_information("UCsp9riHWKza80r2maQOQ-2A")
-    # print(json.dumps(channel, indent=4))
+    channel = get_channel_information(YOUTUBE_CHANNEL_ID)
+    channel_items = channel["items"][0]
+    channel_snippet = channel_items["snippet"]
+    channel_statistics = channel_items["statistics"]
+    print(channel_statistics)
+    try:
+        local_channel = Channel(channel_items["id"],channel_snippet["title"], channel_snippet["description"], channel_statistics["subscriberCount"], channel_snippet["publishedAt"], channel_snippet["thumbnails"]["default"]["url"],channel_statistics["viewCount"], channel_statistics["videoCount"])
+        local_channel.save()
+    except Exception as e:
+        print("Error: ", e)
+        pass
 
     pass
 
