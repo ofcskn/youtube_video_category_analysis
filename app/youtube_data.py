@@ -15,7 +15,7 @@ def fetch_video_description(video_id):
     else:
         return "No description found."
     
-def get_video_comments(video_id, max_comments=50):
+def get_video_comments(video_id, max_comments=20):
     """ Get comments from a Youtube video by 'video_id' using Youtube Data API."""
     comments = []
     try:
