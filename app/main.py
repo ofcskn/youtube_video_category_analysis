@@ -2,6 +2,7 @@ from graph import plot_sentiment_density
 from youtube_data import fetch_video_description, get_channel_information, get_video_comments
 from config import VIDEO_ID
 from nlp_analysis import analyze_sentiment, analyze_sentiment_of_comments, extract_keywords, analyze_keywords_by_language
+from models.channel import Channel
 import json
 
 def main():
