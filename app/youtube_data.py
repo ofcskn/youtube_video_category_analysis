@@ -35,3 +35,18 @@ def get_video_comments(video_id, max_comments=20):
     except Exception as e:
         print(f"An error occurred: {e}")
         return []
+    
+def get_channel_information(channel_id):
+    """" Get the Youtube channel by channel_id using Youtube API. """
+    try:
+        # Get the channel's information 
+        request = youtube.channels().list(
+            part="snippet,contentDetails,statistics",
+            id=channel_id
+        )
+        response = request.execute()
+
+        return response
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return {}
